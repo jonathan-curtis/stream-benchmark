@@ -1,0 +1,8 @@
+.metadata
+.recommenders
+.settings
+.project
+.classpath
+target/
+logs/
+
