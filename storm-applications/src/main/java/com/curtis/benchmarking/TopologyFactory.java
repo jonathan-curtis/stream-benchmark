@@ -79,7 +79,7 @@ public class TopologyFactory {
 		.setBolt("extract_timestamp", new ExtractTimestampPrepareKafkaOutputBolt(), NUM_EXECUTORS)
 		.shuffleGrouping("extract_text");
 
-		builder.setBolt("forwardToKafka", getKakfaBolt(args), 6).shuffleGrouping("extract_timestamp");
+		builder.setBolt("forwardToKafka", getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
 	}
 
 	public static void createGrepTopology(TopologyBuilder builder, String...args) {
