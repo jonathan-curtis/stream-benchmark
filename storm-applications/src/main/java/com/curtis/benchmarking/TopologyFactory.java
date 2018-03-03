@@ -25,6 +25,8 @@ public class TopologyFactory {
 	public static final String GROUP_ID = "storm-benchmarking";
 	
 	public static final int NUM_EXECUTORS = 6;
+	
+	public static final String KAFKA_BOLT = "forward_to_kafka";
 
 	public static StormTopology getBenchmarkTopology(String...args) {
 
@@ -67,7 +69,7 @@ public class TopologyFactory {
 		.setBolt("extract_timestamp", new ExtractTimestampPrepareKafkaOutputBolt(), NUM_EXECUTORS)
 		.shuffleGrouping("kafka_spout");
 
-		builder.setBolt("forward_to_kafka", getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
+		builder.setBolt(KAFKA_BOLT, getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
 	}
 
 	public static void createExtractionTopology(TopologyBuilder builder, String...args) {
@@ -79,7 +81,7 @@ public class TopologyFactory {
 		.setBolt("extract_timestamp", new ExtractTimestampPrepareKafkaOutputBolt(), NUM_EXECUTORS)
 		.shuffleGrouping("extract_text");
 
-		builder.setBolt("forwardToKafka", getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
+		builder.setBolt(KAFKA_BOLT, getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
 	}
 
 	public static void createGrepTopology(TopologyBuilder builder, String...args) {
@@ -95,7 +97,7 @@ public class TopologyFactory {
 		.setBolt("extract_timestamp", new ExtractTimestampPrepareKafkaOutputBolt(), NUM_EXECUTORS)
 		.shuffleGrouping("grep");
 
-		builder.setBolt("forwardToKafka", getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
+		builder.setBolt(KAFKA_BOLT, getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
 	}
 
 	public static void createWordCountTopology(TopologyBuilder builder, String...args) {
@@ -111,7 +113,7 @@ public class TopologyFactory {
 		.setBolt("extract_timestamp", new ExtractTimestampPrepareKafkaOutputBolt(), NUM_EXECUTORS)
 		.shuffleGrouping("word_count");
 
-		builder.setBolt("forwardToKafka", getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
+		builder.setBolt(KAFKA_BOLT, getKakfaBolt(args), NUM_EXECUTORS).shuffleGrouping("extract_timestamp");
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
